@@ -1,0 +1,33 @@
+### Making new environment
+1. Vagrant init (ubuntu/bionic64) - to initalise vagrantfile for ubuntu box
+2. Vagrant up - makes the virtual machine 
+3. Vagrant ssh - to make key (sync folder to the root vagrant folder)
+4. sudo apt-get update - to update software inventory 
+5. sudo apt-get upgrade -y - says yes automatically to upgrades
+6. sudo apt-get install nginx -y - to install open source webserver
+7. sudo systemctl start nginx - to start nginx on new system
+8. ps aux | grep nginx - Display process and pass to grep (filter) nginex
+9. wget 127.0.0.1:80 - connects to web (port number 80)
+ - ifconfig  = finds out about the settings of the vm
+ 
+#### Vagrant file inputs via atom
+````
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.network "private_network", ip: "192.168.10.100"
+  config.hostsupdater.aliases = ["development.local"]
+  config.vm.provider "virtualbox" do |v|
+     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
+end
+````
+
+#### Bonus
+config.vm.provision :shell, path: "bootstrap.sh"
+- Find out about current hard disk space in GB
+
+````
+df --total -h
+````
